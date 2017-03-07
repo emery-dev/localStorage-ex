@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Javascript Localstorage Form</title>
+    <script src="http://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>    
+<body>
+    <div id="form-holder">
+        <h1><i>Job Application Manager</i></h1>
+        <form id="form">
+            <input type="text" id="nameID" placeholder="Company Name" /><br />
+            <input type="text" id="positionID" placeholder="Position" /><br />
+            <input type="text" id="urlID" placeholder="URL" /><br />
+            <input type="text" id="dateID" placeholder="Applied (03-13-2017)" /><br />
+            <label for="status">Status</label>
+            <select id="selectID">
+                <option id="statusID" value="Applied">Applied</option>
+                <option id="statusID" value="Hearback">Hearback</option>
+                <option id="statusID" value="Interview">Interview</option>
+                <option id="statusID" value="Follow-Up">Follow-Up</option>
+            </select><br />
+            <input type="submit" class="btn" id="button" value="Save" />
+        </form>
+    </div>
+    <div id="table-holder">
+        <table id="table">
+        </table>
+    </div>
+</body>
+
+</html>
