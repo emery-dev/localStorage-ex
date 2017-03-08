@@ -6,7 +6,8 @@ $(document).ready(function () {
     if (table === null) {
         table = [];
     }
-
+    
+    /* Modal */
     var btn = document.querySelector("#modalButton");
     btn.addEventListener("click", function(event){
         event.preventDefault();
@@ -35,11 +36,11 @@ $(document).ready(function () {
 
     // Make div display/hide
     function success(){
-        $("#success-message").style.display = "table";
+        $("#success-message").css("display", "table");
     }
 
     function failure(){
-        $("#failure-message").style.display = "table";
+        $("#failure-message").css("display", "table");
     }
 
     $(".close-message").bind("click", function(){
@@ -56,8 +57,8 @@ $(document).ready(function () {
                 status: $("#selectID").val()
             });
             table.push(company);
+            localStorage.successfulPost = "1";
             localStorage.setItem("table", JSON.stringify(table));
-            $("#success-message").css('display', 'table');
             return true;
         }
     }
@@ -72,10 +73,11 @@ $(document).ready(function () {
             name: document.querySelector("#nameID").value,
             position: document.querySelector("#positionID").value,
             url: document.querySelector("#urlID").value,
-            date: document.querySelector("dateID").value,
+            date: document.querySelector("#dateID").value,
             status: $('#selectID option:selected').text()
         });
         localStorage.setItem("table", JSON.stringify(table));
+        localStorage.successfulPost = "1";
         operation = "Add";
         alert('Item updated in the table');
         return true;
@@ -99,12 +101,12 @@ $(document).ready(function () {
         $("#table").html(
             "<thead>" +
             "<tr>" + "<th></th>" + "<th>Name</th>" + "<th>Position</th>" + "<th>Date</th>" + "<th>Status</th>" + "</tr></thead>" + "<tbody id='table-body'>" + "</tbody>");
-        console.log("table3: " + table);
+        console.log("table: " + table);
         for (var i in table) {
             var company = JSON.parse(table[i]);
             $("#table-body").append(
             "<tr>" +
-                "<td style='text-align: center;'><img src='edit-pencil.png' alt='Edit" + i + "' id='updateButton'/><img src='delete.png' alt='Delete" + i + "' id='deleteButton'/></td>" +
+                "<td style='text-align: center;'><img src='edit-pencil.png' alt='Edit" + i + "' class='updateButton'/><img src='delete.png' alt='Delete" + i + "' class='deleteButton'/></td>" +
                 "<td>" + company.name + "</td>" +
                 "<td><a href=" + company.url + " target='_blank'>" + company.position + "</a></td>" +
                 "<td>" + company.date + "</td>" +
@@ -120,22 +122,31 @@ $(document).ready(function () {
             return Update();
         }
     });
-
+    
+    //Check for item in localStorage to
+    //display success div, then delete it
+    //from localStorage
+    if ("successfulPost" in localStorage) {
+                $("#success-message").css('display', 'table');
+                setInterval(function() {
+                    delete localStorage.successfulPost;},           
+                1000);
+    }
     showTable();
+    
     //Must define after showing the table because it is in the table
-    $('#updateButton').bind("click", function () {
+    $('.updateButton').bind("click", function () {
         operation = "Update";
-        console.log('operation: ' + operation);
         curIndex = parseInt($(this).attr("alt").replace("Edit", ""));
         var company = JSON.parse(table[curIndex]);
         document.querySelector("#nameID").value = company.name;
         document.querySelector("#positionID").value = company.position;
         document.querySelector("#urlID").value = company.url;
-        document.querySelector("dateID").value = company.date;
-        $('#selectID').text() = company.status;
+        document.querySelector("#dateID").value = company.date;
+        $('#selectID').val(company.status);
     });
     
-    $('#deleteButton').on("click", function () {
+    $('.deleteButton').on("click", function () {
         console.log('parseInt: ' + parseInt($(this).attr("alt").replace("Delete", "")));
         curIndex = parseInt($(this).attr("alt").replace("Delete", ""));
         console.log(curIndex);
