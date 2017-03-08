@@ -3,14 +3,51 @@ $(document).ready(function () {
     var curIndex = -1;
     var table = localStorage.getItem("table");
     table = JSON.parse(table);
-    if (table == null) {
+    if (table === null) {
         table = [];
     }
-    console.log('operation: ' + operation);
-    
+
+    var btn = document.querySelector("#modalButton");
+    btn.addEventListener("click", function(event){
+        event.preventDefault();
+    });
+
+    // Select the modal
+    var modal = document.querySelector('#modal');
+    var span = document.querySelector(".close");
+
+    // Open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    };
+
+    // Close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    };
+
+    // Close the modal on exterior click
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    // Make div display/hide
+    function success(){
+        $("#success-message").style.display = "table";
+    }
+
+    function failure(){
+        $("#failure-message").style.display = "table";
+    }
+
+    $(".close-message").bind("click", function(){
+        $(this).parent().css('display', 'none');
+    });
+
     function Add() {
         if (operation == "Add") {
-            
             var company = JSON.stringify({
                 name: document.querySelector("#nameID").value,
                 position: document.querySelector("#positionID").value,
@@ -18,10 +55,9 @@ $(document).ready(function () {
                 date: document.querySelector("#dateID").value,
                 status: $("#selectID").val()
             });
-            console.log('company:' + company);
             table.push(company);
             localStorage.setItem("table", JSON.stringify(table));
-            alert('Application entered into storage successfully.');
+            $("#success-message").css('display', 'table');
             return true;
         }
     }
@@ -32,7 +68,6 @@ $(document).ready(function () {
         reset the operation to default, Add
     */
     function Update() {
-        console.log('operation: ' + operation);
         table[curIndex] = JSON.stringify({
             name: document.querySelector("#nameID").value,
             position: document.querySelector("#positionID").value,
@@ -45,8 +80,9 @@ $(document).ready(function () {
         alert('Item updated in the table');
         return true;
     }
-    
+
     function Delete() {
+        console.log('curIndex: ' + curIndex);
         table.splice(curIndex, 1);
         localStorage.setItem("table", JSON.stringify(table));
         alert('Deleted company successfully.');
@@ -56,7 +92,7 @@ $(document).ready(function () {
     /*  Print the table
         Important to reset html before printing,
         then reading in from localStorage.
-        
+
     */
     function showTable() {
         $("#table").html = "";
@@ -77,14 +113,13 @@ $(document).ready(function () {
         }
     }
 
-    
     $('#form').bind("submit", function () {
         if (operation == "Add") {
             return Add();
         } else {
             return Update();
         }
-    })
+    });
 
     showTable();
     //Must define after showing the table because it is in the table
@@ -99,9 +134,11 @@ $(document).ready(function () {
         document.querySelector("dateID").value = company.date;
         $('#selectID').text() = company.status;
     });
-
-    $('#deleteButton').bind("click", function () {
+    
+    $('#deleteButton').on("click", function () {
+        console.log('parseInt: ' + parseInt($(this).attr("alt").replace("Delete", "")));
         curIndex = parseInt($(this).attr("alt").replace("Delete", ""));
+        console.log(curIndex);
         Delete();
         showTable();
     });

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="main.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,700i" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
-</head>    
+</head>
 <body>
     <div id="form-holder">
         <h1><i>Job Application Manager</i></h1>
@@ -24,8 +24,23 @@
                 <option id="statusID" value="Interview">Interview</option>
                 <option id="statusID" value="Follow-Up">Follow-Up</option>
             </select><br />
+            <button id="modalButton" class="btn">Additional Info</button>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h1>Additional Information</h1><span class="close">&times;</span>
+                    <textarea placeholder="Referred through..., Found alum on LinkedIn, interviewed on 4/12, etc."></textarea>
+                </div>
+            </div>
             <input type="submit" class="btn" id="button" value="Save" />
         </form>
+    </div>
+    <div id="success-message">
+        <h3><i>Success</i></h3>
+        <span class="close-message">&times;</span>
+    </div>
+    <div id="alert-message">
+        <h3><i>Item did not update</i></h3>
+        <span class="close-message">&times;</span>
     </div>
     <div id="table-holder">
         <table id="table">
