@@ -113,10 +113,11 @@ label[for="status"] {
 }
 
 /* alert messages */
-#success-message {
+#success-message-add,
+#success-message-update {
     display: none;
     width:80%;
-    margin: 20px auto 0;
+    margin: 20px auto;
     height:70px;
     background-color: #9ff5b3;
     color: #318da3;
@@ -124,10 +125,11 @@ label[for="status"] {
     border-radius: 5px;
 }
 
+#success-message-delete,
 #alert-message {
     display: none;
     width:80%;
-    margin: 20px auto 0;
+    margin: 20px auto;
     height:70px;
     background-color: rgba(245, 159, 159, 0.8);
     color: #6f6f6f;
@@ -135,7 +137,9 @@ label[for="status"] {
     border-radius: 5px;
 }
 
-#success-message h3,
+#success-message-add h3,
+#success-message-update h3,
+#success-message-delete h3,
 #alert-message h3 {
     display: table-cell;
     vertical-align: middle;
@@ -199,15 +203,13 @@ label[for="status"] {
     left: 82px;
 }
 
-
 /* table */
 #table-holder {
     background: #fff;
-    width: 100%;
-    margin: 50px auto 0;
+    width: 90%;
+    margin: 20px auto;
     padding: 20px 0;
     border-radius: 5px;
-    
 }
 
 #table {
